@@ -1,3 +1,6 @@
+package com.example.group2backend.database.entity;
+import java.time.LocalDateTime;
+
 public class User {
     private Integer id;
     private String username;

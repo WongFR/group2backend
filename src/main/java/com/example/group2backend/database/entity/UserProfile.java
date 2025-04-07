@@ -1,3 +1,5 @@
+package com.example.group2backend.database.entity;
+
 public class UserProfile {
     private Integer id;
     private Integer userId;

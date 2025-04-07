@@ -1,3 +1,7 @@
+package com.example.group2backend.database.service;
+
+import com.example.group2backend.database.entity.Team;
+
 import java.util.List;
 
 public interface TeamService {

@@ -1,3 +1,7 @@
+package com.example.group2backend.database.entity;
+
+import java.time.LocalDateTime;
+
 public class Team {
     private Integer id;
     private Integer gameId;
