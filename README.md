@@ -137,6 +137,20 @@ Authorization: Bearer <your-token>
 | POST   | /game/{id}/comments      | Add a comment (requires token)  |
 
 ---
+## ▶️ To Run the App
+
+1. Make sure MySQL is running and database `group2` is created
+2. Configure credentials in `application.yml`
+3. Then run:
+
+```bash
+./gradlew build
+java -jar build/libs/gameconnect-backend-0.0.1-SNAPSHOT.jar
+```
+
+Runs at: `http://localhost:8080`
+
+---
 
 ## 📄 License
 
