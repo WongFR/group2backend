@@ -2,8 +2,6 @@ package com.example.group2backend.database.service;
 
 import com.example.group2backend.database.entity.User;
 
-import java.util.List;
-
 import com.example.group2backend.database.mapper.UserMapper;
 import com.example.group2backend.service.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +27,7 @@ public class UserService {
             throw new RuntimeException("Username already exists");
         }
 
-        user.setPasswordHash(passwordEncoder.encode(user.getPasswordHash()));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setCreatedAt(LocalDateTime.now());
         user.setUpdatedAt(LocalDateTime.now());
         userMapper.insertUser(user);
@@ -37,7 +35,7 @@ public class UserService {
 
     public String login(String username, String rawPassword) {
         User user = userMapper.findByUsername(username);
-        if (user != null && passwordEncoder.matches(rawPassword, user.getPasswordHash())) {
+        if (user != null && passwordEncoder.matches(rawPassword, user.getPassword())) {
             return jwtUtil.generateToken(user.getUsername());
         }
         throw new RuntimeException("Invalid username or password");
