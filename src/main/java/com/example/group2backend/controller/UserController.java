@@ -13,7 +13,7 @@ import org.springframework.security.core.Authentication;
 
 @RestController
 @RequestMapping("/user")
-
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 public class UserController {
 
     @Autowired
@@ -25,6 +25,7 @@ public class UserController {
             userService.register(user);
             return ResponseEntity.ok("Register success");
         } catch (RuntimeException e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
