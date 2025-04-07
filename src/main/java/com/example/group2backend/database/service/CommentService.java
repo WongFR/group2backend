@@ -5,6 +5,7 @@ import com.example.group2backend.database.mapper.CommentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class CommentService {
 
     // Add a new comment
     public void addComment(Comment comment) {
-        comment.setTimestamp(ZonedDateTime.now()); // Set timestamp
+        comment.setTimestamp(LocalDateTime.now()); // Set timestamp
         commentMapper.insertComment(comment);
     }
 

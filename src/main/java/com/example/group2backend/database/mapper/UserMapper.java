@@ -2,12 +2,16 @@ package com.example.group2backend.database.mapper;
 
 import com.example.group2backend.database.entity.User;
 
-import java.util.List;
+import org.apache.ibatis.annotations.*;
 
+@Mapper
 public interface UserMapper {
-    User selectById(Integer id);
-    List<User> selectAll();
-    void insert(User user);
-    void update(User user);
-    void delete(Integer id);
+
+    @Insert("INSERT INTO users (username, password_hash, email, created_at, updated_at) " +
+            "VALUES (#{username}, #{passwordHash}, #{email}, #{createdAt}, #{updatedAt})")
+    @Options(useGeneratedKeys = true, keyProperty = "id")
+    void insertUser(User user);
+
+    @Select("SELECT * FROM users WHERE username = #{username}")
+    User findByUsername(@Param("username") String username);
 }

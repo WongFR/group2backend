@@ -2,7 +2,7 @@ package com.example.group2backend.database.entity;
 import java.time.LocalDateTime;
 
 public class User {
-    private Integer id;
+    private Long id;
     private String username;
     private String passwordHash;
     private String email;
@@ -11,11 +11,11 @@ public class User {
 
     // getters and setters
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

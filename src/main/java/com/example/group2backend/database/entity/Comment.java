@@ -1,6 +1,8 @@
 package com.example.group2backend.database.entity;
 
 import lombok.Data;
+
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
 // Game comment response DTO
@@ -10,5 +12,5 @@ public class Comment {
     private Integer gameId; // Game ID
     private Long userId; // User ID
     private String content; // Comment content
-    private ZonedDateTime timestamp; // Comment timestamp
+    private LocalDateTime timestamp; // Comment timestamp
 }
