@@ -94,6 +94,8 @@ CREATE TABLE users (
 );
 ```
 
+
+
 ### ✅ 2. Build and Run
 
 ```bash
@@ -155,3 +157,33 @@ Runs at: `http://localhost:8080`
 ## 📄 License
 
 MIT License. Free to use and modify.
+
+
+
+### 🔄 Comment Interaction Feature( Implimented by group 6 )
+
+Users can now interact with comments through likes and dislikes:
+
+- Like/dislike comments on games
+- Toggle votes (clicking twice removes a vote)
+- Switch vote type (from like to dislike or vice versa)
+
+#### Database Schema Addition
+
+```sql
+CREATE TABLE comment_vote (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    comment_id BIGINT NOT NULL,
+    user_id BIGINT NOT NULL,
+    is_like BOOLEAN NOT NULL,
+    timestamp DATETIME(6) NOT NULL,
+    
+    -- Constraints
+    CONSTRAINT fk_comment_vote_comment FOREIGN KEY (comment_id) REFERENCES comment(id) ON DELETE CASCADE,
+    CONSTRAINT fk_comment_vote_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    CONSTRAINT uk_comment_vote_user UNIQUE (comment_id, user_id)
+);
+
+-- Indexes for performance
+CREATE INDEX idx_comment_vote_comment ON comment_vote(comment_id);
+CREATE INDEX idx_comment_vote_user ON comment_vote(user_id);
