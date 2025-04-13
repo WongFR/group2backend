@@ -6,6 +6,7 @@ import com.example.group2backend.database.service.CommentService;
 import com.example.group2backend.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,16 +35,15 @@ public class GameInfoController {
 
     // Get all comments of a game
     @GetMapping("/{id}/comments")
-    public ResponseEntity<List<Comment>> getGameComments(@PathVariable Integer id) {
+    public ResponseEntity<List<Comment>> getGameComments(@PathVariable Long id) {
         List<Comment> comments = commentService.getCommentsByGameId(id);
         return ResponseEntity.ok(comments);
     }
 
     // Post a new comment for a game
     @PostMapping("/{id}/comments")
-    public ResponseEntity<String> postGameComment(@PathVariable Integer id, @RequestBody Comment comment) {
-        // Set user ID to a fixed value temporarily
-        comment.setUserId(1L);
+    public ResponseEntity<String> postGameComment(@PathVariable Long id, @RequestBody Comment comment, Authentication auth) {
+        comment.setUserId(Long.parseLong(auth.getName()));
         comment.setGameId(id);
         commentService.addComment(comment);
         return ResponseEntity.ok("Comment added successfully.");

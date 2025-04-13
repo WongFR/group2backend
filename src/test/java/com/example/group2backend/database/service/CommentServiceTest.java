@@ -35,7 +35,7 @@ class CommentServiceTest {
     @Test
     void addComment_shouldSetTimestampAndCallMapper() {
         Comment comment = new Comment();
-        comment.setGameId(1);
+        comment.setGameId(1L);
         comment.setUserId(2L);
         comment.setContent("Great game!");
 
@@ -51,11 +51,11 @@ class CommentServiceTest {
         Comment c2 = new Comment();
         List<Comment> expectedList = Arrays.asList(c1, c2);
 
-        when(commentMapper.getCommentsByGameId(123)).thenReturn(expectedList);
+        when(commentMapper.getCommentsByGameId(123L)).thenReturn(expectedList);
 
-        List<Comment> result = commentService.getCommentsByGameId(123);
+        List<Comment> result = commentService.getCommentsByGameId(123L);
 
         assertEquals(2, result.size(), "Should return 2 comments");
-        verify(commentMapper, times(1)).getCommentsByGameId(123);
+        verify(commentMapper, times(1)).getCommentsByGameId(123L);
     }
 }

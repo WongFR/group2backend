@@ -30,4 +30,8 @@ public class TeamService {
     public List<Team> getAllTeams(Long gameId, Long creatorId) {
         return teamMapper.findByGameIdOrCreatorId(gameId, creatorId);
     }
+
+    public List<Team> searchByName(String keyword) {
+        return teamMapper.searchByTeamNameLike("%" + keyword + "%");
+    }
 }

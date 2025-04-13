@@ -2,6 +2,7 @@ package com.example.group2backend.controller;
 
 import com.example.group2backend.database.entity.Team;
 import com.example.group2backend.database.service.TeamService;
+import com.example.group2backend.database.service.UserService;
 import com.example.group2backend.service.TeamManageService;
 import com.example.group2backend.service.model.TeamWithMembers;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +21,12 @@ public class TeamController {
 
     @Autowired
     private TeamManageService manageService;
+    @Autowired
+    private UserService userService;
 
     @PostMapping("/create")
     public ResponseEntity<String> createTeam(@RequestBody Team team, Authentication auth) {
-        Long userId = Long.parseLong(auth.getName());
+        Long userId = userService.getUserByUsername(auth.getName()).getId();
         team.setCreatorId(userId);
         manageService.addTeamMembers(team, userId);
         teamService.createTeam(team);
@@ -32,7 +35,7 @@ public class TeamController {
 
     @PostMapping("/join")
     public ResponseEntity<String> joinTeam(@RequestBody Team team, Authentication auth) {
-        Long userId = Long.parseLong(auth.getName());
+        Long userId = userService.getUserByUsername(auth.getName()).getId();
         team = teamService.getTeam(team.getId());
 
         manageService.addTeamMembers(team, userId);
@@ -47,18 +50,20 @@ public class TeamController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> updateTeam(@PathVariable Long id, @RequestBody Team team) {
-        team.setId(id);
+    public ResponseEntity<String> updateTeam(@RequestBody Team team) {
         teamService.updateTeam(team);
         return ResponseEntity.ok("Team updated");
     }
 
-    @GetMapping
-    public ResponseEntity<List<TeamWithMembers>> getTeamsByGameOrCreator(
-            @RequestParam(required = false) Long gameId,
-            @RequestParam(required = false) Long creatorId
-    ) {
-        List<TeamWithMembers> teams = manageService.getAllTeams(gameId, creatorId);
+    @GetMapping("/find")
+    public ResponseEntity<List<TeamWithMembers>> getTeamsByGameOrCreator(@RequestBody Team team) {
+        List<TeamWithMembers> teams = manageService.getAllTeams(team.getCreatorId(),team.getGameId());
+        return ResponseEntity.ok(teams);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<TeamWithMembers>> searchTeams(@RequestParam String keyword) {
+        List<TeamWithMembers> teams = manageService.searchByName(keyword);
         return ResponseEntity.ok(teams);
     }
 }

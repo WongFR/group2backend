@@ -45,6 +45,12 @@ public class TeamManageService {
                 .toList();
     }
 
+    public List<TeamWithMembers> searchByName(String keywords) {
+        return teamService.searchByName(keywords)
+                .stream()
+                .map(this::getTeamWithMembers)
+                .toList();
+    }
     private TeamWithMembers getTeamWithMembers(Team team) {
         return new TeamWithMembers(team,
                 userService.findUsersByIds(parseJsonMemberIds(team.getMemberIds())));

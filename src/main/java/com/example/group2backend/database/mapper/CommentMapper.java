@@ -16,6 +16,6 @@ public interface CommentMapper {
 
     // Query all comments for a game
     @Select("SELECT * FROM comment WHERE game_id = #{gameId} ORDER BY timestamp DESC")
-    List<Comment> getCommentsByGameId(@Param("gameId") Integer gameId);
+    List<Comment> getCommentsByGameId(@Param("gameId") Long gameId);
 }
 

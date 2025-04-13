@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 @Data
 public class Team {
     private Long id;
-    private Integer gameId;
+    private Long gameId;
     private Long creatorId;
     private String teamName;
     private Integer teamSize;
