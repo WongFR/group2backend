@@ -3,7 +3,6 @@ package com.example.group2backend.database.entity;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 public class Team {
@@ -13,8 +12,8 @@ public class Team {
     private String teamName;
     private Integer teamSize;
     private String description;
-    private LocalDateTime from;
-    private LocalDateTime to;
+    private LocalDateTime fromTime;
+    private LocalDateTime toTime;
     private LocalDateTime createdAt;
     //Json string
     private String memberIds;

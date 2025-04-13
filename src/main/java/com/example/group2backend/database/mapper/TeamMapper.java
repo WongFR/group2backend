@@ -8,15 +8,15 @@ import java.util.List;
 @Mapper
 public interface TeamMapper {
 
-    @Insert("INSERT INTO team (game_id, creator_id, team_name, team_size, description, `from`, `to`, created_at, member_ids) " +
-            "VALUES (#{gameId}, #{creatorId}, #{teamName}, #{teamSize}, #{description}, #{from}, #{to}, #{createdAt}, #{memberIds})")
+    @Insert("INSERT INTO team (game_id, creator_id, team_name, team_size, description, fromTime, toTime, created_at, member_ids) " +
+            "VALUES (#{gameId}, #{creatorId}, #{teamName}, #{teamSize}, #{description}, #{fromTime}, #{toTime}, #{createdAt}, #{memberIds})")
     void insertTeam(Team team);
 
     @Select("SELECT * FROM team WHERE id = #{id}")
     Team findById(Long id);
 
     @Update("UPDATE team SET game_id = #{gameId}, creator_id = #{creatorId}, team_name = #{teamName}, " +
-            "team_size = #{teamSize}, description = #{description}, `from` = #{from}, `to` = #{to}, " +
+            "team_size = #{teamSize}, description = #{description}, fromTime = #{fromTime}, toTime = #{toTime}, " +
             "member_ids = #{memberIds} WHERE id = #{id}")
     void updateTeam(Team team);
 

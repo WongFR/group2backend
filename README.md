@@ -92,6 +92,19 @@ CREATE TABLE users (
                        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
                        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
+
+CREATE TABLE team (
+                      id BIGINT PRIMARY KEY AUTO_INCREMENT,
+                      game_id INT,
+                      creator_id BIGINT NOT NULL,
+                      team_name VARCHAR(100) NOT NULL,
+                      team_size INT,
+                      description TEXT,
+                      from_time DATETIME,
+                      to_time DATETIME,
+                      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                      member_ids TEXT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 ```
 
 ### ✅ 2. Build and Run
