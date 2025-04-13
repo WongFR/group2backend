@@ -1,0 +1,14 @@
+rawg:
+  api:
+    base-url: https://api.rawg.io/api
+    key: 27187c1f5dd34559b6012ad09000ab63
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/group2?useSSL=false&serverTimezone=UTC&characterEncoding=utf8
+    username: root
+    password: Atharva@232
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+mybatis:
+  type-aliases-package: com.example.group2backend.database.entity

@@ -47,5 +47,32 @@ public class GameInfoController {
         commentService.addComment(comment);
         return ResponseEntity.ok("Comment added successfully.");
     }
+    
+    // Like a comment
+    @PostMapping("/comments/{commentId}/like")
+    public ResponseEntity<String> likeComment(@PathVariable Long commentId) {
+        commentService.likeComment(commentId);
+        return ResponseEntity.ok("Comment liked successfully.");
+    }
+    
+    // Dislike a comment
+    @PostMapping("/comments/{commentId}/dislike")
+    public ResponseEntity<String> dislikeComment(@PathVariable Long commentId) {
+        commentService.dislikeComment(commentId);
+        return ResponseEntity.ok("Comment disliked successfully.");
+    }
+    
+    // Unlike a comment
+    @PostMapping("/comments/{commentId}/unlike")
+    public ResponseEntity<String> unlikeComment(@PathVariable Long commentId) {
+        commentService.unlikeComment(commentId);
+        return ResponseEntity.ok("Comment unliked successfully.");
+    }
+    
+    // Undislike a comment
+    @PostMapping("/comments/{commentId}/undislike")
+    public ResponseEntity<String> undislikeComment(@PathVariable Long commentId) {
+        commentService.undislikeComment(commentId);
+        return ResponseEntity.ok("Comment undisliked successfully.");
+    }
 }
-
