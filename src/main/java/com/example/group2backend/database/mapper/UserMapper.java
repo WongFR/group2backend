@@ -4,6 +4,8 @@ import com.example.group2backend.database.entity.User;
 
 import org.apache.ibatis.annotations.*;
 
+import java.util.List;
+
 @Mapper
 public interface UserMapper {
 
@@ -14,4 +16,14 @@ public interface UserMapper {
 
     @Select("SELECT * FROM users WHERE username = #{username}")
     User findByUsername(@Param("username") String username);
+
+    @Select({
+            "<script>",
+            "SELECT * FROM users WHERE id IN",
+            "<foreach item='id' collection='userIds' open='(' separator=',' close=')'>",
+            "#{id}",
+            "</foreach>",
+            "</script>"
+    })
+    List<User> findUsersByIds(@Param("userIds") List<Long> userIds);
 }
