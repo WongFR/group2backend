@@ -1,16 +1,24 @@
 package com.example.group2backend.controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.example.group2backend.database.entity.Team;
 import com.example.group2backend.database.service.TeamService;
 import com.example.group2backend.database.service.UserService;
 import com.example.group2backend.service.TeamManageService;
 import com.example.group2backend.service.model.TeamWithMembers;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.security.core.Authentication;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/teams")
@@ -66,5 +74,11 @@ public class TeamController {
         List<TeamWithMembers> teams = manageService.searchByName(keyword);
         return ResponseEntity.ok(teams);
     }
+    @GetMapping("/all")
+    public ResponseEntity<List<TeamWithMembers>> getAllTeams() {
+        List<TeamWithMembers> teams = manageService.getAllTeams(null, null);
+        return ResponseEntity.ok(teams);
+}
+
 }
 

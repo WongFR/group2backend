@@ -1,16 +1,15 @@
 package com.example.group2backend.database.service;
 
-import com.example.group2backend.database.entity.User;
+import java.time.LocalDateTime;
+import java.util.List;
 
-import com.example.group2backend.database.mapper.UserMapper;
-import com.example.group2backend.service.JwtUtil;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.util.List;
+import com.example.group2backend.database.entity.User;
+import com.example.group2backend.database.mapper.UserMapper;
+import com.example.group2backend.service.JwtUtil;
 
 @Service
 public class UserService {
@@ -48,6 +47,9 @@ public class UserService {
     }
 
     public List<User> findUsersByIds(List<Long> userIds){
+        if (userIds == null || userIds.isEmpty()) {
+            return List.of(); // or Collections.emptyList()
+        }
         return userMapper.findUsersByIds(userIds);
     }
 }
