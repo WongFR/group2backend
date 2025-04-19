@@ -84,13 +84,17 @@ CREATE TABLE comment (
                          timestamp DATETIME(6) NOT NULL
 );
 
-CREATE TABLE users (
-                       id BIGINT PRIMARY KEY AUTO_INCREMENT,
-                       username VARCHAR(50) NOT NULL UNIQUE,
-                       password VARCHAR(100) NOT NULL,
-                       email VARCHAR(100),
-                       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-                       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+CREATE TABLE user (
+                      id BIGINT PRIMARY KEY AUTO_INCREMENT,
+                      name VARCHAR(255),
+                      username VARCHAR(255) UNIQUE,
+                      password VARCHAR(255),
+                      email VARCHAR(255),
+                      phone VARCHAR(50),
+                      bio TEXT,
+                      favorite_genres VARCHAR(255),
+                      created_at DATETIME,
+                      updated_at DATETIME
 );
 
 CREATE TABLE team (

@@ -9,10 +9,11 @@ import java.util.List;
 @Mapper
 public interface UserMapper {
 
-    @Insert("INSERT INTO users (username, password, email, created_at, updated_at) " +
-            "VALUES (#{username}, #{password}, #{email}, #{createdAt}, #{updatedAt})")
+    @Insert("INSERT INTO users (username, password, email, phone, name, bio, favorite_genres, created_at, updated_at) " +
+            "VALUES (#{username}, #{password}, #{email}, #{phone}, #{name}, #{bio}, #{favoriteGenres}, #{createdAt}, #{updatedAt})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     void insertUser(User user);
+
 
     @Select("SELECT * FROM users WHERE username = #{username}")
     User findByUsername(@Param("username") String username);
