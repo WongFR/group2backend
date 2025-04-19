@@ -78,7 +78,7 @@ public class TeamController {
         return ResponseEntity.ok(teams);
     }
 
-    @Operation(summary = "Get teams created or joined by current user")
+    @Operation(summary = "Get teams created by current user")
     @GetMapping("/me")
     public ResponseEntity<List<TeamWithMembers>> searchTeams(Authentication auth) {
         String username = auth.getName();
