@@ -2,8 +2,13 @@ package com.example.group2backend.controller;
 
 import com.example.group2backend.controller.bodies.GameDetailResponse;
 import com.example.group2backend.database.entity.Comment;
+import com.example.group2backend.database.entity.User;
 import com.example.group2backend.database.service.CommentService;
+import com.example.group2backend.database.service.UserService;
 import com.example.group2backend.service.GameService;
+
+import io.swagger.v3.oas.annotations.Operation;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -22,7 +27,10 @@ public class GameInfoController {
     @Autowired
     private GameService gameService;
 
-    // Get game detail by ID
+    @Autowired
+    private UserService userService;
+
+    @Operation(summary = "Get game detail by ID")
     @GetMapping("/{id}")
     public ResponseEntity<GameDetailResponse> getGameDetail(@PathVariable Long id) {
         GameDetailResponse game = gameService.getGameDetailById(id.toString());
@@ -33,14 +41,23 @@ public class GameInfoController {
         }
     }
 
-    // Get all comments of a game
+    @Operation(summary = "Get all comments of a game")
     @GetMapping("/{id}/comments")
     public ResponseEntity<List<Comment>> getGameComments(@PathVariable Long id) {
         List<Comment> comments = commentService.getCommentsByGameId(id);
         return ResponseEntity.ok(comments);
     }
 
-    // Post a new comment for a game
+    @Operation(summary = "Get all my comments")
+    @GetMapping("/comments/me")
+    public ResponseEntity<List<Comment>> getMyComments(Authentication auth) {
+        String username = auth.getName();
+        User user = userService.getUserByUsername(username);
+        List<Comment> comments = commentService.getCommentsByUserId(user.getId());
+        return ResponseEntity.ok(comments);
+    }
+
+    @Operation(summary = "Post a new comment for a game")
     @PostMapping("/{id}/comments")
     public ResponseEntity<String> postGameComment(@PathVariable Long id, @RequestBody Comment comment, Authentication auth) {
         comment.setUserId(Long.parseLong(auth.getName()));
@@ -49,4 +66,3 @@ public class GameInfoController {
         return ResponseEntity.ok("Comment added successfully.");
     }
 }
-

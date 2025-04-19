@@ -4,12 +4,13 @@ import com.example.group2backend.controller.bodies.LoginRequest;
 import com.example.group2backend.controller.bodies.UserInfoResponse;
 import com.example.group2backend.database.entity.User;
 import com.example.group2backend.database.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 
+import io.swagger.v3.oas.annotations.Operation;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.Authentication;
-
 
 @RestController
 @RequestMapping("/user")
@@ -19,6 +20,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Operation(summary = "Register a new user")
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody User user) {
         try {
@@ -30,6 +32,7 @@ public class UserController {
         }
     }
 
+    @Operation(summary = "Login and get JWT token")
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody LoginRequest request) {
         try {
@@ -40,14 +43,11 @@ public class UserController {
         }
     }
 
+    @Operation(summary = "Get current logged-in user info")
     @GetMapping("/me")
-    public ResponseEntity<?> getCurrentUser(Authentication authentication) {
+    public ResponseEntity<User> getCurrentUser(Authentication authentication) {
         String username = authentication.getName();
         User user = userService.getUserByUsername(username);
-        if (user != null) {
-            return ResponseEntity.ok(new UserInfoResponse(user.getId(), user.getUsername(), user.getEmail(), user.getCreatedAt(), user.getUpdatedAt()));
-        } else {
-            return ResponseEntity.status(404).body("User not found");
-        }
+        return ResponseEntity.ok().body(user);
     }
 }

@@ -3,7 +3,6 @@ package com.example.group2backend.database.entity;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 
 // Game comment response DTO
 @Data

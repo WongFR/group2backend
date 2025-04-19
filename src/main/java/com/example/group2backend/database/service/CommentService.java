@@ -7,7 +7,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 import java.util.List;
 
 @Service
@@ -25,6 +24,11 @@ public class CommentService {
     // Get comments by game ID
     public List<Comment> getCommentsByGameId(Long gameId) {
         return commentMapper.getCommentsByGameId(gameId);
+    }
+
+    // Get comments by game ID
+    public List<Comment> getCommentsByUserId(Long userId) {
+        return commentMapper.getCommentsByUserId(userId);
     }
 }
 
