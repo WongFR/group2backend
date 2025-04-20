@@ -18,13 +18,23 @@ public interface UserMapper {
     @Select("SELECT * FROM users WHERE username = #{username}")
     User findByUsername(@Param("username") String username);
 
+
     @Select({
-            "<script>",
-            "SELECT * FROM users WHERE id IN",
-            "<foreach item='id' collection='userIds' open='(' separator=',' close=')'>",
-            "#{id}",
-            "</foreach>",
-            "</script>"
-    })
-    List<User> findUsersByIds(@Param("userIds") List<Long> userIds);
+                "<script>",
+                "SELECT * FROM users",
+                "<where>",
+                "  <if test='userIds != null and userIds.size() > 0'>",
+                "    id IN",
+                "    <foreach collection='userIds' item='id' open='(' separator=',' close=')'>",
+                "      #{id}",
+                "    </foreach>",
+                "  </if>",
+                "</where>",
+                "</script>"
+     })
+     List<User> findUsersByIds(@Param("userIds") List<Long> userIds);
+
+
+
+
 }
