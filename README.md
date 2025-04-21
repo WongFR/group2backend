@@ -86,7 +86,7 @@ CREATE TABLE comment (
                          timestamp DATETIME(6) NOT NULL
 );
 
-CREATE TABLE user (
+CREATE TABLE users (
                       id BIGINT PRIMARY KEY AUTO_INCREMENT,
                       name VARCHAR(255),
                       username VARCHAR(255) UNIQUE,
