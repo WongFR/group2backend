@@ -56,7 +56,7 @@ public class UserController {
     public ResponseEntity<String> edit(@RequestBody User user) {
         try {
             userService.edit(user);
-            return ResponseEntity.ok("Register success");
+            return ResponseEntity.ok("Update success");
         } catch (RuntimeException e) {
             e.printStackTrace();
             return ResponseEntity.badRequest().body(e.getMessage());

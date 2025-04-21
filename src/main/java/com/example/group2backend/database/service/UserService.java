@@ -37,10 +37,10 @@ public class UserService {
 
     public void edit(User user) {
         User userFromDb = userMapper.findById(user.getId());
-        if (userMapper.findByUsername(user.getUsername()) != null) {
+        if (!userFromDb.getUsername().equals(user.getUsername())
+                && userMapper.findByUsername(user.getUsername()) != null) {
             throw new RuntimeException("Username already exists");
         }
-
         user.setPassword(userFromDb.getPassword());
         user.setCreatedAt(userFromDb.getCreatedAt());
         user.setUpdatedAt(LocalDateTime.now());
