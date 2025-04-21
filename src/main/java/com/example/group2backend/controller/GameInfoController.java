@@ -60,7 +60,10 @@ public class GameInfoController {
     @Operation(summary = "Post a new comment for a game")
     @PostMapping("/{id}/comments")
     public ResponseEntity<String> postGameComment(@PathVariable Long id, @RequestBody Comment comment, Authentication auth) {
-        comment.setUserId(Long.parseLong(auth.getName()));
+        String username = auth.getName();
+        User user = userService.getUserByUsername(username);
+
+        comment.setUserId(user.getId());
         comment.setGameId(id);
         commentService.addComment(comment);
         return ResponseEntity.ok("Comment added successfully.");
