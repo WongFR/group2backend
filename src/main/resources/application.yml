@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/group2
+    username: root
+    password: 12345
+
+rawg:
+  api:
+    base-url: https://api.rawg.io/api
+    key: 82d95785f7284ed0a924ab9af896bc74
