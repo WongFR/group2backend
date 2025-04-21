@@ -101,7 +101,7 @@ public class UserController {
             String filePath = uploadDir + File.separator + hashName;
             file.transferTo(new File(filePath));
 
-            return ResponseEntity.ok(filePath);
+            return ResponseEntity.ok(hashName);
         } catch (IOException e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)

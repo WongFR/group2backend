@@ -9,8 +9,8 @@ import java.util.List;
 @Mapper
 public interface UserMapper {
 
-    @Insert("INSERT INTO users (username, password, email, phone, name, bio, favorite_genres, created_at, updated_at) " +
-            "VALUES (#{username}, #{password}, #{email}, #{phone}, #{name}, #{bio}, #{favoriteGenres}, #{createdAt}, #{updatedAt})")
+    @Insert("INSERT INTO users (username, password, email, phone, name, bio, favorite_genres, created_at, updated_at, avatar) " +
+            "VALUES (#{username}, #{password}, #{email}, #{phone}, #{name}, #{bio}, #{favoriteGenres}, #{createdAt}, #{updatedAt}, #{avatar})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     void insertUser(User user);
 
@@ -39,7 +39,8 @@ public interface UserMapper {
             "name = #{name}, " +
             "bio = #{bio}, " +
             "favorite_genres = #{favoriteGenres}, " +
-            "updated_at = #{updatedAt} " +
+            "avatar = #{avatar}, " +
+            "updated_at = #{updatedAt}" +
             "WHERE id = #{id}")
     void updateUser(User user);
 }

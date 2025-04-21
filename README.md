@@ -96,7 +96,8 @@ CREATE TABLE users (
                       bio TEXT,
                       favorite_genres VARCHAR(255),
                       created_at DATETIME,
-                      updated_at DATETIME
+                      updated_at DATETIME,
+                      avatar VARCHAR(255)
 );
 
 CREATE TABLE team (

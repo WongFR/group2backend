@@ -41,6 +41,7 @@ public class UserService {
                 && userMapper.findByUsername(user.getUsername()) != null) {
             throw new RuntimeException("Username already exists");
         }
+
         user.setPassword(userFromDb.getPassword());
         user.setCreatedAt(userFromDb.getCreatedAt());
         user.setUpdatedAt(LocalDateTime.now());
