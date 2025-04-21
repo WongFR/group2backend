@@ -35,6 +35,18 @@ public class UserService {
         userMapper.insertUser(user);
     }
 
+    public void edit(User user) {
+        User userFromDb = userMapper.findById(user.getId());
+        if (userMapper.findByUsername(user.getUsername()) != null) {
+            throw new RuntimeException("Username already exists");
+        }
+
+        user.setPassword(userFromDb.getPassword());
+        user.setCreatedAt(userFromDb.getCreatedAt());
+        user.setUpdatedAt(LocalDateTime.now());
+        userMapper.updateUser(user);
+    }
+
     public String login(String username, String rawPassword) {
         User user = userMapper.findByUsername(username);
         if (user != null && passwordEncoder.matches(rawPassword, user.getPassword())) {

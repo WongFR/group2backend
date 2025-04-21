@@ -50,4 +50,16 @@ public class UserController {
         User user = userService.getUserByUsername(username);
         return ResponseEntity.ok().body(user);
     }
+
+    @Operation(summary = "Edit user profile")
+    @PostMapping("/edit")
+    public ResponseEntity<String> edit(@RequestBody User user) {
+        try {
+            userService.edit(user);
+            return ResponseEntity.ok("Register success");
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }

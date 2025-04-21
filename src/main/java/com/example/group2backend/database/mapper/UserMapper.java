@@ -18,6 +18,9 @@ public interface UserMapper {
     @Select("SELECT * FROM users WHERE username = #{username}")
     User findByUsername(@Param("username") String username);
 
+    @Select("SELECT * FROM users WHERE id = #{id}")
+    User findById(@Param("id") Long id);
+
     @Select({
             "<script>",
             "SELECT * FROM users WHERE id IN",
@@ -27,4 +30,16 @@ public interface UserMapper {
             "</script>"
     })
     List<User> findUsersByIds(@Param("userIds") List<Long> userIds);
+
+    @Update("UPDATE users SET " +
+            "username = #{username}, " +
+            "password = #{password}, " +
+            "email = #{email}, " +
+            "phone = #{phone}, " +
+            "name = #{name}, " +
+            "bio = #{bio}, " +
+            "favorite_genres = #{favoriteGenres}, " +
+            "updated_at = #{updatedAt} " +
+            "WHERE id = #{id}")
+    void updateUser(User user);
 }
