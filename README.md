@@ -61,6 +61,8 @@ spring:
 
 mybatis:
   type-aliases-package: com.example.group2backend.database.entity
+  configuration:
+    map-underscore-to-camel-case: true
 ```
 
 ---
