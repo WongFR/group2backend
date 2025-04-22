@@ -21,5 +21,8 @@ public interface CommentMapper {
     // Query all comments for a game
     @Select("SELECT * FROM comment WHERE user_id = #{userId} ORDER BY timestamp DESC")
     List<Comment> getCommentsByUserId(@Param("userId") Long userId);
+
+    @Update("UPDATE comment SET like_count = like_count + 1 WHERE id = #{id}")
+    void incrementLike(@Param("id") Long id);
 }
 

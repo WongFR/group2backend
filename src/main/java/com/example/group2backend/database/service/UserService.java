@@ -63,4 +63,8 @@ public class UserService {
     public List<User> findUsersByIds(List<Long> userIds){
         return userMapper.findUsersByIds(userIds);
     }
+
+    public User findUsersById(Long userId){
+        return userMapper.findById(userId);
+    }
 }

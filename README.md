@@ -83,7 +83,8 @@ CREATE TABLE comment (
                          game_id INT NOT NULL,
                          user_id BIGINT NOT NULL,
                          content TEXT NOT NULL,
-                         timestamp DATETIME(6) NOT NULL
+                         timestamp DATETIME(6) NOT NULL,
+                         like_count BIGINT NOT NULL
 );
 
 CREATE TABLE users (
@@ -112,6 +113,14 @@ CREATE TABLE team (
                       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
                       member_ids TEXT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE comment_like (
+                              id BIGINT PRIMARY KEY AUTO_INCREMENT,
+                              user_id BIGINT NOT NULL,
+                              comment_id BIGINT NOT NULL,
+                              created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                              UNIQUE KEY uniq_user_comment (user_id, comment_id)
+);
 ```
 
 ### ✅ 2. Build and Run

@@ -12,4 +12,6 @@ public class Comment {
     private Long userId; // User ID
     private String content; // Comment content
     private LocalDateTime timestamp; // Comment timestamp
+
+    private Long likeCount = 0L;
 }

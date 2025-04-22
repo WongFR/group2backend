@@ -2,6 +2,7 @@ package com.example.group2backend.database.service;
 
 import com.example.group2backend.database.entity.Comment;
 import com.example.group2backend.database.mapper.CommentMapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,10 @@ public class CommentService {
     // Get comments by game ID
     public List<Comment> getCommentsByUserId(Long userId) {
         return commentMapper.getCommentsByUserId(userId);
+    }
+
+    public void incrementLike(Long id){
+        commentMapper.incrementLike(id);
     }
 }
 

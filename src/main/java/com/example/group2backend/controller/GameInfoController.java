@@ -1,20 +1,23 @@
 package com.example.group2backend.controller;
 
 import com.example.group2backend.controller.bodies.GameDetailResponse;
-import com.example.group2backend.database.entity.Comment;
 import com.example.group2backend.database.entity.User;
 import com.example.group2backend.database.service.CommentService;
 import com.example.group2backend.database.service.UserService;
 import com.example.group2backend.service.GameService;
 
+import com.example.group2backend.service.model.GameComment;
 import io.swagger.v3.oas.annotations.Operation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import com.example.group2backend.database.entity.Comment;
 
 import java.util.List;
+
+import static org.springframework.http.HttpStatus.CONFLICT;
 
 @RestController
 @RequestMapping("/game_info")
@@ -43,8 +46,10 @@ public class GameInfoController {
 
     @Operation(summary = "Get all comments of a game")
     @GetMapping("/{id}/comments")
-    public ResponseEntity<List<Comment>> getGameComments(@PathVariable Long id) {
-        List<Comment> comments = commentService.getCommentsByGameId(id);
+    public ResponseEntity<List<GameComment>> getGameComments(@PathVariable Long id) {
+        List<GameComment> comments = commentService.getCommentsByGameId(id).stream()
+                .map(comment -> gameService.getGameComment(comment))
+                .toList();
         return ResponseEntity.ok(comments);
     }
 
@@ -67,5 +72,18 @@ public class GameInfoController {
         comment.setGameId(id);
         commentService.addComment(comment);
         return ResponseEntity.ok("Comment added successfully.");
+    }
+
+    @Operation(summary = "Like a comment")
+    @PostMapping("/comments/{id}/like")
+    public ResponseEntity<String> likeComment(@PathVariable Long id, Authentication auth) {
+        Long userId = userService.getUserByUsername(auth.getName()).getId();
+
+        try {
+            gameService.likeComment(userId, id);
+            return ResponseEntity.ok("Liked");
+        } catch (Exception e) {
+            return ResponseEntity.status(CONFLICT).body("You have already liked this comment.");
+        }
     }
 }
