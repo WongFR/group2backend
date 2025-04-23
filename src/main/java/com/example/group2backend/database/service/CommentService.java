@@ -19,6 +19,7 @@ public class CommentService {
     // Add a new comment
     public void addComment(Comment comment) {
         comment.setTimestamp(LocalDateTime.now()); // Set timestamp
+        comment.setLikeCount(0L);
         commentMapper.insertComment(comment);
     }
 

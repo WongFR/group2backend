@@ -121,6 +121,16 @@ CREATE TABLE comment_like (
                               created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
                               UNIQUE KEY uniq_user_comment (user_id, comment_id)
 );
+
+CREATE TABLE join_team (
+                           id BIGINT PRIMARY KEY AUTO_INCREMENT,
+                           team_id BIGINT NOT NULL,
+                           user_id BIGINT NOT NULL,
+                           status ENUM('PENDING', 'APPROVED', 'REJECTED') DEFAULT 'PENDING',
+                           request_time DATETIME DEFAULT CURRENT_TIMESTAMP,
+                           host_id BIGINT NOT NULL,
+                           UNIQUE KEY uniq_user_team (team_id, user_id)
+);
 ```
 
 ### ✅ 2. Build and Run

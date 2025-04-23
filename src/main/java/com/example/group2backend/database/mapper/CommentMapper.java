@@ -9,8 +9,8 @@ import java.util.List;
 public interface CommentMapper {
 
     // Insert a new comment
-    @Insert("INSERT INTO comment (game_id, user_id, content, timestamp) " +
-            "VALUES (#{gameId}, #{userId}, #{content}, #{timestamp})")
+    @Insert("INSERT INTO comment (game_id, user_id, content, timestamp, like_count) " +
+            "VALUES (#{gameId}, #{userId}, #{content}, #{timestamp}, #{likeCount})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     void insertComment(Comment comment);
 

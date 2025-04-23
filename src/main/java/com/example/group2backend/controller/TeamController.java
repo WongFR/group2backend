@@ -1,10 +1,12 @@
 package com.example.group2backend.controller;
 
+import com.example.group2backend.database.entity.JoinTeam;
 import com.example.group2backend.database.entity.Team;
 import com.example.group2backend.database.entity.User;
 import com.example.group2backend.database.service.TeamService;
 import com.example.group2backend.database.service.UserService;
 import com.example.group2backend.service.TeamManageService;
+import com.example.group2backend.service.model.JoinTeamWithUser;
 import com.example.group2backend.service.model.TeamWithMembers;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -28,6 +30,9 @@ public class TeamController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private TeamManageService teamManageService;
 
     @Operation(summary = "Create a new team")
     @PostMapping("/create")
@@ -87,4 +92,38 @@ public class TeamController {
         List<TeamWithMembers> teams = manageService.getAllTeams(user.getId(), null);
         return ResponseEntity.ok(teams);
     }
+
+    @Operation(summary = "Apply to join a team")
+    @PostMapping("/apply/{teamId}")
+    public ResponseEntity<String> apply(@PathVariable Long teamId, Authentication auth) {
+        String username = auth.getName();
+        User user = userService.getUserByUsername(username);
+
+        teamManageService.apply(teamId, user.getId());
+        return ResponseEntity.ok("Join request submitted.");
+    }
+
+    @Operation(summary = "Approve join team request")
+    @PostMapping("/approve/{joinTeamId}")
+    public ResponseEntity<String> approve(@PathVariable Long joinTeamId) {
+        teamManageService.approveTeam(joinTeamId);
+        return ResponseEntity.ok("Join request approved.");
+    }
+
+    @Operation(summary = "Reject join team request")
+    @PostMapping("/reject/{joinTeamId}")
+    public ResponseEntity<String> reject(@PathVariable Long joinTeamId) {
+        teamManageService.rejectTeam(joinTeamId);
+        return ResponseEntity.ok("Join request rejected.");
+    }
+
+    @Operation(summary = "Get all the team request for me")
+    @GetMapping("/my_team_request")
+    public ResponseEntity<List<JoinTeamWithUser>> getMyRequests(Authentication auth) {
+        Long userId = userService.getUserByUsername(auth.getName()).getId();
+
+        List<JoinTeamWithUser> pendingJoinTeams = teamManageService.getPendingJoinTeams(userId);
+        return ResponseEntity.ok(pendingJoinTeams);
+    }
+
 }
