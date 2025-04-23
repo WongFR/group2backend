@@ -87,4 +87,15 @@ public class TeamController {
         List<TeamWithMembers> teams = manageService.getAllTeams(user.getId(), null);
         return ResponseEntity.ok(teams);
     }
+    @Operation(summary = "Leave a team")
+    @PostMapping("/leave")
+    public ResponseEntity<String> leaveTeam(@RequestBody Team team, Authentication auth) {
+        Long userId = userService.getUserByUsername(auth.getName()).getId();
+        team = teamService.getTeam(team.getId());   
+
+        manageService.removeTeamMembers(team, userId); 
+        teamService.updateTeam(team);                   
+
+        return ResponseEntity.ok("Left the team");
+    }
 }
