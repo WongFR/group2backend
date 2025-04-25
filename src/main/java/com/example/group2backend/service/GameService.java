@@ -16,7 +16,8 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class GameService {
 
-    private final RestTemplate restTemplate;
+    @Autowired
+    private RestTemplate restTemplate;
 
     @Value("${rawg.api.base-url}")
     private String baseUrl;
@@ -32,11 +33,6 @@ public class GameService {
 
     @Autowired
     private UserService userService;
-
-
-    public GameService(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
-    }
 
     // Call RAWG API to get game detail by ID or slug
     public GameDetailResponse getGameDetailById(String idOrSlug) {
