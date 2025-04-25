@@ -47,7 +47,7 @@ public class TeamManageService {
     }
 
     public List<TeamWithMembers> getAllTeams(Long userId, Long gameId) {
-        return teamService.getAllTeams(userId, gameId)
+        return teamService.getAllTeams(gameId, userId)
                 .stream()
                 .map(this::getTeamWithMembers)
                 .toList();
