@@ -131,9 +131,9 @@ java -jar build/libs/gameconnect-backend-0.0.1-SNAPSHOT.jar
 
 ### 📜 API Docs
 
-
 After you launch the project, Swagger UI is available at:  
 `http://localhost:8080/swagger-ui/index.html`
+
 ---
 
 ## 📁 Project Structure
