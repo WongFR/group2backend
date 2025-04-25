@@ -32,6 +32,9 @@ public class TeamManageService {
 
     public void addTeamMembers(Team team, Long userId) {
         List<Long> memberIds = parseJsonMemberIds(team.getMemberIds());
+        if (memberIds.size() >= team.getTeamSize()) {
+            throw new RuntimeException("Team is full");
+        }
         memberIds.add(userId);
         team.setMemberIds(toJson(memberIds));
     }
@@ -67,6 +70,11 @@ public class TeamManageService {
     public void apply(Long teamId, Long userId) {
         Team team = teamService.getTeam(teamId);
 
+        List<Long> memberIds = parseJsonMemberIds(team.getMemberIds());
+        if (memberIds.size() >= team.getTeamSize()) {
+            throw new RuntimeException("Team is full");
+        }
+
         JoinTeam joinTeam = new JoinTeam();
         joinTeam.setTeamId(teamId);
         joinTeam.setUserId(userId);
@@ -74,7 +82,11 @@ public class TeamManageService {
         joinTeam.setStatus("PENDING");
         joinTeam.setRequestTime(LocalDateTime.now());
 
-        joinTeamService.insert(joinTeam);
+        try {
+            joinTeamService.insert(joinTeam);
+        } catch (Exception e) {
+            throw new RuntimeException("You have already applied for this team");
+        }
     }
 
     @Transactional
